@@ -1,11 +1,12 @@
+import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import tarefa from "./models/tarefas.js";
 const app = express();
-
+dotenv.config()
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://jackwood:Skate1303@todolist.r37dsob.mongodb.net/?retryWrites=true&w=majority&appName=todoList")
+mongoose.connect(process.env.URL_MONGO)
 .then(() => console.log("Banco de dados conectado"))
 .catch(() => console.log("deu ruim"));
 
