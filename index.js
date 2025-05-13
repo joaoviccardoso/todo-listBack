@@ -30,4 +30,19 @@ app.post("/tarefas", async (req, res) =>{
     }
 })
 
+app.put("/tarefas/:id", async (req, res) =>{
+    try {
+        const id = req.params.id;
+        const atualizarTarefa = await tarefa.findByIdAndUpdate(id, {$set: req.body}, { new: true });
+
+        if(atualizarTarefa !== null){
+            res.status(200).send({message: "Tarefa atualizado com sucesso"});
+        } else {
+            res.status(404).send({message: "id do Tarefa nao localizado"})
+        }
+    } catch (error) {
+        return res.send(500).json({erro: "erro ao atualizar tarefa"})
+    }
+})
+
 app.listen(3000)
