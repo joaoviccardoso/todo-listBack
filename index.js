@@ -1,14 +1,14 @@
-import dotenv from "dotenv";
 import express from "express";
-import mongoose from "mongoose";
+import db from "./config/connectDb.js";
 import tarefa from "./models/tarefas.js";
 const app = express();
-dotenv.config()
+
 app.use(express.json());
 
-mongoose.connect(process.env.URL_MONGO)
-.then(() => console.log("Banco de dados conectado"))
-.catch(() => console.log("deu ruim"));
+db.on("erro", console.log.bind(console, 'Erro de conexão'))
+db.once("open", () => {
+    console.log('conexão com o banco feita com sucesso')
+});
 
 app.get("/tarefas", async (req, res) => {
     try {
@@ -28,7 +28,6 @@ app.post("/tarefas", async (req, res) =>{
     } catch (error) {
         return res.send(500).json({erro: "erro ao cadastrar tarefa"})
     }
-    
 })
 
 app.listen(3000)
