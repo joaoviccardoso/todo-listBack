@@ -9,20 +9,25 @@ mongoose.connect("mongodb+srv://jackwood:Skate1303@todolist.r37dsob.mongodb.net/
 .then(() => console.log("Banco de dados conectado"))
 .catch(() => console.log("deu ruim"));
 
-app.get("/", (req, res) =>{
-    req.send("conectado")
-})
-
-app.get("/tarefas", (req, res) => {
-    return res.json(tarefas)
+app.get("/tarefas", async (req, res) => {
+    try {
+        const tarefas = await tarefa.find();
+        return res.json(tarefas)
+    } catch (error) {
+        return res.send(500).json({ erro: "Erro ao buscar tarefas" })
+    }
+    
 })
 
 app.post("/tarefas", async (req, res) =>{
-    const requisicao = req.body;
-
-    const newTarefa = await tarefa.create(requisicao);
-
-    return res.json(newTarefa);
+    try {
+        const requisicao = req.body;
+        const newTarefa = await tarefa.create(requisicao);
+        return res.json(newTarefa);
+    } catch (error) {
+        return res.send(500).json({erro: "erro ao cadastrar tarefa"})
+    }
+    
 })
 
 app.listen(3000)
