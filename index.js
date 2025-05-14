@@ -45,4 +45,19 @@ app.put("/tarefas/:id", async (req, res) =>{
     }
 })
 
+app.delete("/tarefas/:id", async(req, res) =>{
+    try {
+        const id = req.params.id;
+        const deletarTarefa = await tarefa.findByIdAndDelete(id);
+
+        if(deletarTarefa !== null){
+            res.status(200).send({message: "Tarefa deletada com sucesso"});
+        } else {
+            res.status(404).send({message: "id da Tarefa nao localizado"})
+        }
+    } catch (error) {
+        return res.status(500).json({erro: "erro ao deletar tarefa"})
+    }
+})
+
 app.listen(3000)
