@@ -1,26 +1,26 @@
 import tarefa from "../models/tarefas.js";
 
 export class TarefasController{
-    async listarTarefas(req, res){
+    async listarTarefas(req, res, next){
         try {
             const tarefas = await tarefa.find();
             return res.json(tarefas)
         } catch (error) {
-            return res.send(500).json({ erro: "Erro ao buscar tarefas" })
+            next(error)
         }
     }
 
-    async postTarefas(req, res){
+    async postTarefas(req, res, next){
         try{
             const requisicao = req.body;
             const newTarefa = await tarefa.create(requisicao);
             return res.json(newTarefa);
         }catch (error) {
-            return res.send(500).json({erro: "erro ao cadastrar tarefa"})
+            next(error)
         }
     }
 
-    async atualizarTarefa(req, res){
+    async atualizarTarefa(req, res, next){
         try {
             const id = req.params.id;
             const atualizarTarefa = await tarefa.findByIdAndUpdate(id, {$set: req.body}, { new: true });
@@ -31,11 +31,11 @@ export class TarefasController{
                 res.status(404).send({message: "id do Tarefa nao localizado"})
             }
             } catch (error) {
-                return res.send(500).json({erro: "erro ao atualizar tarefa"})
+                next(error)
             }
     }
 
-    async deletarTarefa(req, res){
+    async deletarTarefa(req, res, next){
         try {
             const id = req.params.id;
             const deletarTarefa = await tarefa.findByIdAndDelete(id);
@@ -46,10 +46,9 @@ export class TarefasController{
                     res.status(404).send({message: "id da Tarefa nao localizado"})
             }
         } catch (error) {
-                return res.status(500).json({erro: "erro ao deletar tarefa"})
+            next(error)
         }
     }
-     
 }
 
 export default  new TarefasController();
