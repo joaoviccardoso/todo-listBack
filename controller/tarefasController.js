@@ -1,10 +1,12 @@
+
 import tarefa from "../models/tarefas.js";
 
 export class TarefasController{
     async listarTarefas(req, res, next){
+
         try {
             const tarefas = await tarefa.find();
-            return res.json(tarefas)
+            return res.status(200).json(tarefas)
         } catch (error) {
             next(error)
         }

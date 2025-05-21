@@ -1,10 +1,23 @@
 import mongoose from "mongoose"
+import erroBase from "../erro/erroBase.js"
+import requisicaoIncorreta from "../erro/erroRequisicaoIncorreta.js"
+import ErroValidacao from "../erro/erroValidacao.js"
 
+
+// Middleware responsável por tratar erros lançados durante as requisições
 function manipuladorDeErro(erro, req, res, next){
+
+    // Trata erro de conversão de tipos no MongoDB (ex: id mal formatado)
     if(erro instanceof mongoose.Error.CastError){
-        res.status(400).send({mensagem: "Um ou mais dados fornecidos estao errados"})
-    } else{
-        res.status(500).send({mensagem: "Erro interno do servidor"})
+        new requisicaoIncorreta().enviarResposta(res)
+
+    // Trata erro de validação dos dados definidos no schema do Mongoose
+    }else if(erro instanceof mongoose.Error.ValidationError){
+        new ErroValidacao(erro).enviarResposta(res)
+
+    // Qualquer outro erro é tratado como erro interno do servidor    
+    }else{
+        new erroBase().enviarResposta(res)
     }    
 }
 
