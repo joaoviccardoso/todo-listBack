@@ -1,4 +1,5 @@
 
+import ErroNaoEcontrado from "../erro/erroNaoEcontrado.js";
 import tarefa from "../models/tarefas.js";
 
 export class TarefasController{
@@ -30,7 +31,7 @@ export class TarefasController{
             if(atualizarTarefa !== null){
                 res.status(200).send({message: "Tarefa atualizado com sucesso"});
             } else {
-                res.status(404).send({message: "id do Tarefa nao localizado"})
+                next(new ErroNaoEcontrado("id do Tarefa nao localizado"));
             }
             } catch (error) {
                 next(error)
@@ -45,7 +46,7 @@ export class TarefasController{
             if(deletarTarefa !== null){
                     res.status(200).send({message: "Tarefa deletada com sucesso"});
             } else {
-                    res.status(404).send({message: "id da Tarefa nao localizado"})
+                    next(new ErroNaoEcontrado("id da Tarefa para deletar nao localizado"));
             }
         } catch (error) {
             next(error)

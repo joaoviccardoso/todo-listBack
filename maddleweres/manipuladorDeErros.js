@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import erroBase from "../erro/erroBase.js"
 import requisicaoIncorreta from "../erro/erroRequisicaoIncorreta.js"
 import ErroValidacao from "../erro/erroValidacao.js"
+import ErroNaoEcontrado from "../erro/erroNaoEcontrado.js"
 
 
 // Middleware responsável por tratar erros lançados durante as requisições
@@ -15,8 +16,11 @@ function manipuladorDeErro(erro, req, res, next){
     }else if(erro instanceof mongoose.Error.ValidationError){
         new ErroValidacao(erro).enviarResposta(res)
 
-    // Qualquer outro erro é tratado como erro interno do servidor    
-    }else{
+    
+    }else if(erro instanceof ErroNaoEcontrado){
+        erro.enviarResposta(res)
+    // Qualquer outro erro é tratado como erro interno do servidor   
+    } else{
         new erroBase().enviarResposta(res)
     }    
 }

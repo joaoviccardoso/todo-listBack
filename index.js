@@ -2,6 +2,7 @@ import express from "express";
 import db from "./config/connectDb.js";
 import router from "./routes/routesTarefas.js";
 import manipuladorDeErro from "./maddleweres/manipuladorDeErros.js";
+import manipulador404 from "./maddleweres/manipulador404.js";
 
 const app = express();
 
@@ -13,7 +14,7 @@ db.once("open", () => {
 });
 
 app.use("/", router);
-
+app.use(manipulador404)
 app.use(manipuladorDeErro)
 
 
