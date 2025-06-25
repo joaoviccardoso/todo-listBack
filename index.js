@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import db from "./config/connectDb.js";
-import router from "./routes/routesTarefas.js";
+import router from "./routes/routesMensagem.js";
 import manipuladorDeErro from "./maddleweres/manipuladorDeErros.js";
 import manipulador404 from "./maddleweres/manipulador404.js";
 
