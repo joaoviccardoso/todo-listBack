@@ -9,9 +9,7 @@ import manipulador404 from "./maddleweres/manipulador404.js";
 const app = express(); // <=== DEVE vir antes do uso de app.use
 
 // Configurações
-app.use(cors({
-  origin: 'http://127.0.0.1:5500'
-}));
+app.use(cors());
 app.use(express.json());
 
 db.on("erro", console.log.bind(console, 'Erro de conexão'))
