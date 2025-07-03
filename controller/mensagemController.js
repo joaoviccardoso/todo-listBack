@@ -13,6 +13,16 @@ export class TarefasController{
         }
     }
 
+    async buscarMensagemPorId(req, res, next){
+        try {
+            const id = req.params.id;
+            const mensagemId = await mensagem.findById(id)
+            return res.status(200).json(mensagemId)
+        } catch (error) {
+            next (error)
+        }
+    }
+
     async postMensagem(req, res, next){
         try{
             const requisicao = req.body;
