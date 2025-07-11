@@ -14,6 +14,7 @@ const mensagemSchema = new mongoose.Schema({
         required: [true, "A senha e um campo obrigadorio."]
     },
     createdAt: { type: Date, default: Date.now },
+    likes: {type: String}
 })
 
 export default mongoose.model("mensagem", mensagemSchema);
