@@ -76,7 +76,7 @@ export class TarefasController{
     async deletarMensagem(req, res, next){
         try {
             const id = req.params.id;
-            const deletarMensagem = await mensagem.findByIdAndDelete(id);
+            const deletarMensagem = await Mensagem.findByIdAndDelete(id);
         
             if(deletarMensagem !== null){
                     res.status(200).send({message: "Mensagem deletada com sucesso"});

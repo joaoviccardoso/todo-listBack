@@ -9,6 +9,10 @@ const mensagemSchema = new mongoose.Schema({
         type: String, 
         required: [true, "A mensagem e um campo obrigadorio."] 
     },
+    categoria:{
+        type: String,
+        required: [true, "A categoria e um campo obrigadorio."] 
+    },
     senha: {
         type: String,
         required: [true, "A senha e um campo obrigadorio."]
